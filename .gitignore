@@ -35,4 +35,4 @@ buildNumber.properties
 ## Miscellaneous
 ##############################
 *.log
-resources/
+docs/resources/

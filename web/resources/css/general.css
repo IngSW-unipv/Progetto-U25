@@ -1,0 +1,22 @@
+.fullcenterContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome{
+    text-align: center;
+    border-color: gray;
+    border-width: 1px;
+    border-style: solid;
+}
+
+/*
+All text is big for easy visibility
+*/
+h1, h2, h3, h4, h5, h6, p{
+    font-size: 2.5em;
+}
+input{
+    height: 2em;
+}
