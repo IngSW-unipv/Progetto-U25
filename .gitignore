@@ -17,6 +17,16 @@ replay_pid*
 .code-workspace
 
 ##############################
+## IntelliJ
+##############################
+out/
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+*.iws
+
+##############################
 ## Maven
 ##############################
 target/
@@ -36,3 +46,4 @@ buildNumber.properties
 ##############################
 *.log
 docs/resources/
+src/test
