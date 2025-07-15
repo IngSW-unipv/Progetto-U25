@@ -6,7 +6,7 @@ import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.nomeCheckBe
 import java.time.LocalTime;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Checkpoint {
+public class Checkpoint implements Cloneable {
     private int id;
     private int progressivo;
     private LocalTime orario;
@@ -19,6 +19,10 @@ public class Checkpoint {
 
     public String getNomeCheckpoint(){
         return NomiCheckpoint.getNome(this.id);
+    }
+
+    public Checkpoint clone(){
+        return new Checkpoint(this.id, this.progressivo, this.orario);
     }
 
     public int getId() {

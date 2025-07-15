@@ -5,11 +5,12 @@ import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.CheckpointS
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class TabellaDiMarcia {
+public class TabellaDiMarcia implements Cloneable{
     private int linea;
     private Duration ritardo;
     private int ultimoCheck; //valore 'progressivo' dell'ultimo checkpoint visitato dal veicolo
@@ -17,7 +18,7 @@ public class TabellaDiMarcia {
 
     public TabellaDiMarcia(CheckpointSuLineaBean[] checkpointBeans, LocalTime time, int capolinea, int linea) {
         this.linea = linea;
-        ultimoCheck = 0;
+        this.ultimoCheck = 0;
         this.ritardo = Duration.between(time, LocalTime.now());
         if (this.ritardo.compareTo(Duration.ZERO) < 0) {
             this.ritardo = Duration.ZERO;
@@ -66,16 +67,22 @@ public class TabellaDiMarcia {
         this.checkpoints = checkpoints.toArray(new Checkpoint[0]);
     }
 
-    public boolean nextCheckpoint() {  //return finished trip value
+    private TabellaDiMarcia(int linea, Duration ritardo, int ultimoCheck, Checkpoint[] checkpoints) {
+        this.linea = linea;
+        this.ritardo = ritardo;
+        this.ultimoCheck = ultimoCheck;
+        this.checkpoints = checkpoints;
+    }
+
+    public boolean nextCheckpoint() {  //ritorna true se il programma è terminato
+        //aggiorna ultimo checkpoint
+        this.ultimoCheck++;
+
+        //calcola l'indice della stazione corrente nella lista
         int currentIndex = getCheckpointIndexFromProgressivo(this.ultimoCheck);
 
         //aggiorna ritardo
-        if (this.ultimoCheck != 0) {
-            this.ritardo = Duration.between(this.checkpoints[currentIndex].getOrario(), LocalTime.now());
-        }
-
-        //aggiorna ultimo checkpoint
-        this.ultimoCheck++;
+        this.ritardo = Duration.between(this.checkpoints[currentIndex].getOrario(), LocalTime.now()).truncatedTo(ChronoUnit.MINUTES);
 
         //controlla se il veicolo ha completato la linea (il progressivo più alto deve essere uguale alla lunghezza dell'array)
         if (ultimoCheck > this.checkpoints.length-1) {
@@ -107,6 +114,36 @@ public class TabellaDiMarcia {
         }
 
         return output;
+    }
+
+    public Duration getRitardo() {
+        return ritardo;
+    }
+
+    public int getLinea() {
+        return linea;
+    }
+
+    public String getCurrentCheckpointName() {
+        int index = getCheckpointIndexFromProgressivo(this.ultimoCheck);
+        return getCheckpointName(index);
+    }
+
+    public String getNextCheckpointName() {
+        int index = getCheckpointIndexFromProgressivo(this.ultimoCheck+1);
+        return getCheckpointName(index);
+    }
+
+    public String getCheckpointName(int index) {
+        return index == -1 ? "" : this.checkpoints[index].getNomeCheckpoint();
+    }
+
+    public TabellaDiMarcia clone(){
+        Checkpoint[] checkpoints = new Checkpoint[this.checkpoints.length];
+        for (int i = 0; i < this.checkpoints.length; i++) {
+            checkpoints[i] = this.checkpoints[i].clone();
+        }
+        return new TabellaDiMarcia(this.linea, this.ritardo, this.ultimoCheck, checkpoints);
     }
 
 }

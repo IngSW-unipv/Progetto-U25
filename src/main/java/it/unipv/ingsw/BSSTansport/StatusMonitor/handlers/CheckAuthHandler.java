@@ -11,9 +11,11 @@ public class CheckAuthHandler implements Handler {
         String token = ctx.cookie("token");
         if (token == null) {
             ctx.status(403);
+            ctx.redirect("/");
         }
         if (!SessionManager.getInstance().checkToken(token)) {
             ctx.status(403);
+            ctx.redirect("/");
         }
     }
 

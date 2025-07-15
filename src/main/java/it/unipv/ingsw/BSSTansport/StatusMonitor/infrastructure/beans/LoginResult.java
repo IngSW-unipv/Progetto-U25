@@ -1,8 +1,8 @@
 package it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans;
 
 public class LoginResult {
-    private final String name;
-    private final String surname;
+    private final String nome;
+    private final String cognome;
     private final boolean success;
     private String token=null;
 
@@ -15,8 +15,8 @@ public class LoginResult {
     }
 
     private LoginResult(String name, String surname, boolean success) {
-        this.name = name;
-        this.surname = surname;
+        this.nome = name;
+        this.cognome = surname;
         this.success = success;
     }
 
@@ -24,12 +24,12 @@ public class LoginResult {
         return success;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getCognome() {
+        return cognome;
     }
 
     public void setToken(String token) throws Exception {

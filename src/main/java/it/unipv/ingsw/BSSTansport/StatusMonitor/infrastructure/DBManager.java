@@ -79,8 +79,9 @@ public class DBManager {
     public OrariBean[] getOrari(int linea){
         ArrayList<OrariBean> orari = new ArrayList<OrariBean>();
 
-        try (PreparedStatement statement = this.connection.prepareStatement("SELECT orario, capolinea FROM orari_inizio"))
+        try (PreparedStatement statement = this.connection.prepareStatement("SELECT orario, capolinea FROM orari_inizio WHERE linea = ?"))
         {
+            statement.setInt(1, linea);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 orari.add(new OrariBean(resultSet.getTime("orario").toLocalTime(), resultSet.getInt("capolinea")));

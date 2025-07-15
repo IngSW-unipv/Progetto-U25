@@ -1,5 +1,6 @@
 package it.unipv.ingsw.BSSTansport.StatusMonitor.data;
 
+import it.unipv.ingsw.BSSTansport.StatusMonitor.handlers.GuiUpdateHandler;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.DBManager;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.CheckpointSuLineaBean;
 
@@ -32,10 +33,12 @@ public class Flotta {
         if (this.veicoli.containsKey(vId)) {
             this.veicoli.remove(vId);
         }
+        this.updateGui();
     }
 
     public void aggiungiVeicolo(String vId, CheckpointSuLineaBean[] checkpoints, LocalTime time, int capolinea, int linea) {
-        this.veicoli.put(vId, new Veicolo(checkpoints, time, capolinea, linea));
+        this.veicoli.put(vId, new Veicolo(checkpoints, vId, time, capolinea, linea));
+        this.updateGui();
     }
 
     public String trovaVeicoloId(TabellaDiMarcia tabellaMarcia) {
@@ -53,10 +56,25 @@ public class Flotta {
     }
 
     public boolean nextCheckpoint(String vId){
-        return this.veicoli.get(vId).nextCheckpoint();
+        boolean finished = this.veicoli.get(vId).nextCheckpoint();
+        this.updateGui();
+        return finished;
     }
 
     public void setGuasto(String vId, boolean guasto) {
         this.veicoli.get(vId).setGuasto(guasto);
+        this.updateGui();
+    }
+
+    public Veicolo[] getClonedVeicoliArray(){
+        Veicolo[] veicoli = this.veicoli.values().toArray(new Veicolo[0]);
+        for (int i = 0; i < veicoli.length ; i++) {
+            veicoli[i]=veicoli[i].clone();
+        }
+        return veicoli;
+    }
+
+    private void updateGui(){
+        GuiUpdateHandler.handleRequest();
     }
 }

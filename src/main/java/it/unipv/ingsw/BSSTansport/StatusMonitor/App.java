@@ -2,15 +2,27 @@ package it.unipv.ingsw.BSSTansport.StatusMonitor;
 
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
+import it.unipv.ingsw.BSSTansport.StatusMonitor.GUI.IntermediarioFlottaTabella;
+import it.unipv.ingsw.BSSTansport.StatusMonitor.GUI.TabellaVeicoli;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.handlers.*;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.DBManager;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class App {
     public static void main(String[] args) {
         DBManager dbm = DBManager.getInstance();
         Javalin webServer = createWebServer();
+
+        /*
+
+        TabellaVeicoli gui = new TabellaVeicoli(new IntermediarioFlottaTabella());
+        GuiUpdateHandler.setGui(gui);
+        GuiUpdateHandler.handleRequest();
+
+         */
     }
 
 
