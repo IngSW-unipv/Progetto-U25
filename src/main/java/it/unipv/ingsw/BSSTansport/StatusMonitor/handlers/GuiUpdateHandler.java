@@ -9,8 +9,10 @@ public class GuiUpdateHandler implements Handler {
     private static TabellaVeicoli gui;
 
     public static void handleRequest(){
-        Veicolo[] veicoli = Flotta.getInstance().getClonedVeicoliArray();
-        gui.update(veicoli);
+        if(gui!=null){
+            Veicolo[] veicoli = Flotta.getInstance().getClonedVeicoliArray();
+            gui.update(veicoli);
+        }
     };
 
     public static TabellaVeicoli getGui() {

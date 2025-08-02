@@ -13,7 +13,7 @@ public class NomiCheckpoint {
         {
             NomiCheckpoint.nomi = getNomi();
         }
-        if (id<0 || id>=NomiCheckpoint.nomi.size())
+        if (id<0 || id>NomiCheckpoint.nomi.size())
         {
             return "";
         }

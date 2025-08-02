@@ -10,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.FormatStyle;
 import java.util.HashMap;
 
 public class RegistraViaggioHandler implements Handler {
@@ -38,7 +41,7 @@ public class RegistraViaggioHandler implements Handler {
             Flotta.getInstance().aggiungiVeicolo(
                     vId,
                     checkpoints,
-                    LocalTime.parse(request.get("orarioPartenza")),
+                    LocalTime.parse(request.get("orarioPartenza"), DateTimeFormatter.ISO_LOCAL_TIME),
                     Integer.parseInt(request.get("capolinea")),
                     Integer.parseInt(request.get("linea"))
                     );

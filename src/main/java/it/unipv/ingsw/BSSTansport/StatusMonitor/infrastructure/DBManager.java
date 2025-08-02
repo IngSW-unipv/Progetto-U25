@@ -1,15 +1,20 @@
 package it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure;
 
+import it.unipv.ingsw.BSSTansport.StatusMonitor.App;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.CheckpointSuLineaBean;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.LoginResult;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.OrariBean;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.nomeCheckBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DBManager {
+    private static final Logger log = LoggerFactory.getLogger("DBManager");
+
     private static volatile DBManager instance=null;
 
     private Connection connection;
@@ -17,7 +22,10 @@ public class DBManager {
     private DBManager(){
         try {
             this.openConnection();
-        }catch (SQLException e){} // TODO: handle
+        }catch (SQLException e){
+            log.error(e.getMessage());
+            log.error("DB connection unsuccessful");
+        } // TODO: handle
     }
 
     public static DBManager getInstance(){
@@ -34,9 +42,11 @@ public class DBManager {
     }
 
     private void openConnection() throws SQLException {
+        log.info("Opening connection to database...");
         this.connection=DriverManager.getConnection(
                 "jdbc:mariadb://localhost:3306/statusMonitorDB",
                 "admin", "adminpass"); //TODO: environment variables
+        log.info("Database connection opened!");
     }
 
     private void closeConnection() throws SQLException {

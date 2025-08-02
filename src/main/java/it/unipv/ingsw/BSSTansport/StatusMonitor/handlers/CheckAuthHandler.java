@@ -10,13 +10,16 @@ public class CheckAuthHandler implements Handler {
     public static void handleRequest(@NotNull Context ctx) {
         String token = ctx.cookie("token");
         if (token == null) {
-            ctx.status(403);
-            ctx.redirect("/");
+            authFailed(ctx);
         }
         if (!SessionManager.getInstance().checkToken(token)) {
-            ctx.status(403);
-            ctx.redirect("/");
+            authFailed(ctx);
         }
+    }
+
+    public static void authFailed(Context ctx) {
+        ctx.status(403);
+        ctx.redirect("/?redirect=authError");
     }
 
 }
