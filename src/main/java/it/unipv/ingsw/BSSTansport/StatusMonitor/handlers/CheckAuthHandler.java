@@ -1,6 +1,7 @@
 package it.unipv.ingsw.BSSTansport.StatusMonitor.handlers;
 
 import io.javalin.http.Context;
+import io.javalin.http.HttpStatus;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.SessionManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +12,7 @@ public class CheckAuthHandler implements Handler {
         String token = ctx.cookie("token");
         if (token == null) {
             authFailed(ctx);
+            return;
         }
         if (!SessionManager.getInstance().checkToken(token)) {
             authFailed(ctx);
@@ -18,8 +20,7 @@ public class CheckAuthHandler implements Handler {
     }
 
     public static void authFailed(Context ctx) {
-        ctx.status(403);
-        ctx.redirect("/?redirect=authError");
+        ctx.redirect("/?causaRedirect=401");
     }
 
 }

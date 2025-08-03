@@ -74,7 +74,7 @@ public class TabellaDiMarcia implements Cloneable{
         this.checkpoints = checkpoints;
     }
 
-    public boolean nextCheckpoint() {  //ritorna true se il programma è terminato
+    public boolean nextCheckpoint() {  //ritorna true se il viaggio è terminato
         //aggiorna ultimo checkpoint
         this.ultimoCheck++;
 
