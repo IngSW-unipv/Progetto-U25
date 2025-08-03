@@ -109,8 +109,27 @@ public class TabellaDiMarcia implements Cloneable{
         for (int i = 0; i < 2; i++) {
             output[i] = new HashMap<String, String>();
             int index = getCheckpointIndexFromProgressivo(this.ultimoCheck+i);
-            output[i].put("nome", index == -1 ? "" : this.checkpoints[index].getNomeCheckpoint());
-            output[i].put("orarioPianificato", index == -1 ? "" : this.checkpoints[index].getOrario().toString());
+
+            if (index==-1){ //se il campo è vuoto lo segnala e continua
+                output[i].put("tipo", "estremo");
+                continue;
+            }
+
+            //se il campo non è vuoto aggiunge tutti i dettagli
+
+            output[i].put("nome", this.checkpoints[index].getNomeCheckpoint());
+            output[i].put("orarioPianificato", this.checkpoints[index].getOrario().toString());
+
+            if (this.checkpoints[index].getClass()==Stazione.class) { //aggiungi i campi extra se è una stazione
+                Stazione s = (Stazione) this.checkpoints[index];
+
+                output[i].put("tipo", "stazione");
+                output[i].put("lunghezza", s.getLunghezza().toString());
+                output[i].put("attesa", String.valueOf(s.getDurata().toSeconds()));
+            }
+            else{
+                output[i].put("tipo", "checkpoint");
+            }
         }
 
         return output;

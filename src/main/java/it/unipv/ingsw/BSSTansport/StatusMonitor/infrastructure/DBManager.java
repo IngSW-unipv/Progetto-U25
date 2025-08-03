@@ -1,6 +1,5 @@
 package it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure;
 
-import it.unipv.ingsw.BSSTansport.StatusMonitor.App;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.CheckpointSuLineaBean;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.LoginResult;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.OrariBean;
@@ -10,30 +9,28 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DBManager {
     private static final Logger log = LoggerFactory.getLogger("DBManager");
 
-    private static volatile DBManager instance=null;
+    private static volatile DBManager instance = null;
 
     private Connection connection;
 
-    private DBManager(){
+    private DBManager() {
         try {
             this.openConnection();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             log.error(e.getMessage());
             log.error("DB connection unsuccessful");
         } // TODO: handle
     }
 
-    public static DBManager getInstance(){
-        DBManager result=DBManager.instance;
-        if (result==null)
-        {
-            synchronized (DBManager.class){
-                if (result==null){
+    public static DBManager getInstance() {
+        DBManager result = DBManager.instance;
+        if (result == null) {
+            synchronized (DBManager.class) {
+                if (result == null) {
                     DBManager.instance = result = new DBManager();
                 }
             }
@@ -43,7 +40,7 @@ public class DBManager {
 
     private void openConnection() throws SQLException {
         log.info("Opening connection to database...");
-        this.connection=DriverManager.getConnection(
+        this.connection = DriverManager.getConnection(
                 "jdbc:mariadb://localhost:3306/statusMonitorDB",
                 "admin", "adminpass"); //TODO: environment variables
         log.info("Database connection opened!");
@@ -53,57 +50,54 @@ public class DBManager {
         this.connection.close();
     }
 
-    public nomeCheckBean[] getCheckpointNames(){
-        ArrayList<nomeCheckBean> nomi =  new ArrayList<>();
+    public nomeCheckBean[] getCheckpointNames() {
+        ArrayList<nomeCheckBean> nomi = new ArrayList<>();
 
-        try (PreparedStatement statement = this.connection.prepareStatement("SELECT id, nome FROM checkpoint"))
-        {
+        try (PreparedStatement statement = this.connection.prepareStatement("SELECT id, nome FROM checkpoint")) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 nomeCheckBean n = new nomeCheckBean(resultSet.getInt("id"), resultSet.getString("nome"));
 
                 nomi.add(n);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.err.println(e);      //TODO handle
         }
         return nomi.toArray(new nomeCheckBean[0]);
     }
 
-    public Integer[] getLinee(){
+    public Integer[] getLinee() {
         ArrayList<Integer> linee = new ArrayList<Integer>();
 
-        try (PreparedStatement statement = this.connection.prepareStatement("SELECT nome FROM linea"))
-        {
+        try (PreparedStatement statement = this.connection.prepareStatement("SELECT nome FROM linea")) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 linee.add(resultSet.getInt("nome"));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.err.println(e);      //TODO handle
         }
 
         return linee.toArray(new Integer[0]);
     }
 
-    public OrariBean[] getOrari(int linea){
+    public OrariBean[] getOrari(int linea) {
         ArrayList<OrariBean> orari = new ArrayList<OrariBean>();
 
-        try (PreparedStatement statement = this.connection.prepareStatement("SELECT orario, capolinea FROM orari_inizio WHERE linea = ?"))
-        {
+        try (PreparedStatement statement = this.connection.prepareStatement("SELECT orario, capolinea FROM orari_inizio WHERE linea = ?")) {
             statement.setInt(1, linea);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 orari.add(new OrariBean(resultSet.getTime("orario").toLocalTime(), resultSet.getInt("capolinea")));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.err.println(e);      //TODO handle
         }
 
         return orari.toArray(new OrariBean[0]);
     }
 
-    public LoginResult checkAuth(String username, String passHash) throws SQLException{
+    public LoginResult checkAuth(String username, String passHash) throws SQLException {
         PreparedStatement statement = this.connection.prepareStatement("SELECT nome, cognome FROM conducente WHERE cf=? and pass_hash = ?");
         statement.setString(1, username);
         statement.setString(2, passHash);
@@ -117,15 +111,15 @@ public class DBManager {
         return LoginResult.success(resultSet.getString("nome"), resultSet.getString("cognome"));
     }
 
-    public CheckpointSuLineaBean[] getCheckpointSuLinea(int linea) throws SQLException{
+    public CheckpointSuLineaBean[] getCheckpointSuLinea(int linea) throws SQLException {
         ArrayList<CheckpointSuLineaBean> checkpoints = new ArrayList<CheckpointSuLineaBean>();
 
         PreparedStatement statement = this.connection.prepareStatement("""
-            SELECT cl.checkpoint, cl.numero, cl.delayS, c.tipo, s.lunghezza, s.durata_fermataS
-            FROM checkpoint_su_linea AS cl 
-            LEFT JOIN checkpoint AS c ON  cl.checkpoint=c.id
-            LEFT JOIN stazione AS s ON c.id=s.id
-            WHERE cl.linea=?""");
+                SELECT cl.checkpoint, cl.numero, cl.delayS, c.tipo, s.lunghezza, s.durata_fermataS
+                FROM checkpoint_su_linea AS cl 
+                LEFT JOIN checkpoint AS c ON  cl.checkpoint=c.id
+                LEFT JOIN stazione AS s ON c.id=s.id
+                WHERE cl.linea=?""");
         statement.setInt(1, linea);
         ResultSet resultSet = statement.executeQuery();
 
