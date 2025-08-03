@@ -20,7 +20,7 @@ VALUES
 ("Boulder Spur", 1),
 ("Clay Ridge Crossing", 1),
 ("Ironroot Signal", 1),
-("Quartz Switch", 1),
+("Rose Quartz Switch", 1),
 ("Muddy Hollow Point", 1),
 ("Granite Loop", 1),
 ("Terracotta Marker", 1),
