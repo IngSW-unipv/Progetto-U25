@@ -4,13 +4,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.json.JavalinJackson;
-import io.javalin.json.JsonMapper;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.GUI.IntermediarioFlottaTabella;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.GUI.TabellaVeicoli;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.handlers.*;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.DBManager;
 
-import javax.swing.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -66,6 +64,7 @@ public class App {
         app.get("/api/reserved/logout", WebLogoutHandler::handleRequest);
         app.post("/api/reserved/registraViaggio", RegistraViaggioHandler::handleRequest);
         app.get("/api/reserved/prossimoCheckpoint", PcheckPointHandler::handleRequest);
+        app.get("/api/reserved/infoCheckpoint", webInfoHandler::handleRequest);
         app.post("/api/reserved/guasto", GuastoHandler::handleRequest);
 
         app.start(8080);

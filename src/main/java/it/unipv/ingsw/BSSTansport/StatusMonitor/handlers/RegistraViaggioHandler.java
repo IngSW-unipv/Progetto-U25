@@ -45,7 +45,7 @@ public class RegistraViaggioHandler implements Handler {
                     Integer.parseInt(request.get("capolinea")),
                     Integer.parseInt(request.get("linea"))
                     );
-            ctx.json(Flotta.getInstance().webTabellaInfo(vId));
+            ctx.status(200);
         }catch(SQLException e){
             ctx.status(500);
         }

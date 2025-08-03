@@ -5,17 +5,17 @@ import it.unipv.ingsw.BSSTansport.StatusMonitor.data.Flotta;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.SessionManager;
 import org.jetbrains.annotations.NotNull;
 
-public class PcheckPointHandler {
+import java.util.HashMap;
+
+public class webInfoHandler implements Handler {
+    public static void handleRequest(Context ctx, String vId) {
+        HashMap<String, String>[] webTab = Flotta.getInstance().webTabellaInfo(vId);
+        ctx.json(webTab);
+    }
+
     public static void handleRequest(@NotNull Context ctx) {
         String token = ctx.cookie("token");
-
         String vId= SessionManager.getInstance().getVId(token);
-
-        boolean finished = Flotta.getInstance().nextCheckpoint(vId);
-        if (finished) {
-            ctx.status(205);
-        }else{
-            webInfoHandler.handleRequest(ctx, vId);
-        }
+        handleRequest(ctx, vId);  //calls the other method overload
     }
 }
