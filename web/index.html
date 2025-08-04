@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BSSTansport monitor: Login</title>
+    <link rel='stylesheet' href='/resources/css/general.css'>
+</head>
+
+<body>
+    <div class="form-container" id="loginDiv">
+        <h1>Benvenuto</h1>
+
+        <input type='text' id='cf' placeholder='Codice fiscale'>
+        <input type='password' id='pwd' placeholder='Password'>
+        <input type='text' id='vid' placeholder='Id veicolo'>
+        <p style='visibility: hidden;' id='wct'>Credenziali errate</p>
+        <input type='button' value='Login' onclick='login()'>
+    </div>
+</body>
+
+<script src="/resources/js/login.js"></script>
+<script>controllaRedirect()</script>
+
+</html>

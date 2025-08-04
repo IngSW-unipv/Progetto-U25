@@ -1,0 +1,49 @@
+# This file can be used to test REST APIs through vscode and the extension "REST client" (https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+
+GET http://127.0.0.7:8080/api/getLinee HTTP/1.1
+
+###
+GET http://127.0.0.7:8080/api/getOrari?linea=1 HTTP/1.1
+
+###
+POST http://127.0.0.7:8080/api/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "RBMB123456XYZ789",
+    "password": "death",
+    "vid": "23033"
+}
+
+###
+
+GET http://127.0.0.7:8080/api/reserved/logout HTTP/1.1
+
+
+###
+
+POST http://127.0.0.7:8080/api/reserved/registraViaggio HTTP/1.1
+content-type: application/json
+
+{
+    "orarioPartenza":"12:00",
+    "capolinea": "1",
+    "linea": "1"
+}
+
+###
+
+GET http://127.0.0.7:8080/api/reserved/prossimoCheckpoint HTTP/1.1
+
+###
+
+GET http://127.0.0.7:8080/api/reserved/infoCheckpoint HTTP/1.1
+
+###
+
+POST http://127.0.0.7:8080/api/reserved/guasto HTTP/1.1
+content-type: application/json
+
+{
+    "guasto":"true"
+}

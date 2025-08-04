@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: statusMonitorDB
+  name: statusMonitorPod
+spec:
+  containers:
+  - args:
+    - mariadbd
+    env:
+    - name: MARIADB_USER
+      value: admin
+    - name: MARIADB_PASSWORD
+      value: adminpass
+    - name: MARIADB_ROOT_PASSWORD
+      value: password
+    - name: MARIADB_DATABASE
+      value: statusMonitorDB
+    image: docker.io/library/mariadb:lts-ubi9
+    name: statusMonitorCont
+    ports:
+    - containerPort: 3306
+      hostPort: 3306
+    securityContext: {}
+
