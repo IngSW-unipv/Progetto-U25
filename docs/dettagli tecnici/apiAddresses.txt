@@ -1,0 +1,10 @@
+/api
+    |- /getlinee                    (get)
+    |- /getOrari?linea=int          (get)
+    |- /login                       (post) {username, password, vid}
+    |- /reserved
+        |-/registraViaggio          (post) {orarioPartenza, capolinea, linea}
+        |-/infoCheckpoint           (get)
+        |-/prossimoCheckpoint       (get)
+        |-/guasto                   (post) {guasto}
+        |-/logout                   (get)
