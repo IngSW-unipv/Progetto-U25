@@ -11,10 +11,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class TabellaDiMarcia implements Cloneable {
-    private int linea;
+    private final int linea;
     private Duration ritardo;
     private int ultimoCheck; // valore 'progressivo' dell'ultimo checkpoint visitato dal veicolo
-    private Checkpoint[] checkpoints;
+    private final Checkpoint[] checkpoints;
 
     public TabellaDiMarcia(CheckpointSuLineaBean[] checkpointBeans, LocalTime time, int capolinea, int linea) {
         this.linea = linea;
@@ -28,8 +28,7 @@ public class TabellaDiMarcia implements Cloneable {
         Arrays.sort(checkpointBeans);
         // controlla direzione linea
         int lunghezzaBean = checkpointBeans.length;
-        if (capolinea == checkpointBeans[0].getNumero()) { // inverti l'ordine delle stazioni se il capolinea è il primo
-                                                           // elemento
+        if (capolinea == checkpointBeans[0].getCheckpoint()) { // inverti l'ordine delle stazioni se il capolinea è il primo elemento
             for (int i = 0; i < lunghezzaBean; i++) {
 
                 // inverti il l'ordine
@@ -44,7 +43,7 @@ public class TabellaDiMarcia implements Cloneable {
                 }
 
             }
-            Arrays.sort(checkpointBeans);
+            Arrays.sort(checkpointBeans); //riordina
         }
 
         // crea l'attributo checkpoints
@@ -62,8 +61,7 @@ public class TabellaDiMarcia implements Cloneable {
             if (c.getTipo().equals("checkpoint")) {
                 checkpoints.add(new Checkpoint(c.getCheckpoint(), c.getNumero(), arrivo));
             } else {
-                checkpoints.add(new Stazione(c.getCheckpoint(), c.getNumero(), arrivo, c.getLunghezza(),
-                        Duration.ofSeconds(c.getDurataFermataS())));
+                checkpoints.add(new Stazione(c.getCheckpoint(), c.getNumero(), arrivo, c.getLunghezza(), Duration.ofSeconds(c.getDurataFermataS())));
             }
         }
 
@@ -81,6 +79,13 @@ public class TabellaDiMarcia implements Cloneable {
         // aggiorna ultimo checkpoint
         this.ultimoCheck++;
 
+        // controlla se il veicolo ha completato la linea (il progressivo più alto deve
+        // essere maggiore alla lunghezza dell'array)
+        if (ultimoCheck > this.checkpoints.length) {
+            this.fineLinea();
+            return true;
+        }
+
         // calcola l'indice della stazione corrente nella lista
         int currentIndex = getCheckpointIndexFromProgressivo(this.ultimoCheck);
 
@@ -88,12 +93,6 @@ public class TabellaDiMarcia implements Cloneable {
         this.ritardo = Duration.between(this.checkpoints[currentIndex].getOrario(), LocalTime.now())
                 .truncatedTo(ChronoUnit.MINUTES);
 
-        // controlla se il veicolo ha completato la linea (il progressivo più alto deve
-        // essere uguale alla lunghezza dell'array)
-        if (ultimoCheck > this.checkpoints.length - 1) {
-            this.fineLinea();
-            return true;
-        }
         return false;
     }
 
@@ -116,7 +115,7 @@ public class TabellaDiMarcia implements Cloneable {
             output[i] = new HashMap<String, String>();
             int index = getCheckpointIndexFromProgressivo(this.ultimoCheck + i);
 
-            if (index == -1) { // se il campo è vuoto lo segnala e continua
+            if (index == -1 || this.ultimoCheck + i > this.checkpoints.length) { // se la linea è appena iniziata o sta finendo lo segnala e continua
                 output[i].put("tipo", "estremo");
                 continue;
             }
