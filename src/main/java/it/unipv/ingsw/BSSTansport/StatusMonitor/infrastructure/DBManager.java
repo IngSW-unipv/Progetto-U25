@@ -19,11 +19,16 @@ public class DBManager {
 
     private DBManager() {
         try {
-            this.openConnection();
+            String url = System.getenv("DB_URL");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            this.openConnection(url, user, pass);
         } catch (SQLException e) {
             log.error(e.getMessage());
             log.error("DB connection unsuccessful");
-        } // TODO: handle
+            System.exit(12);
+        }
     }
 
     public static DBManager getInstance() {
@@ -38,11 +43,9 @@ public class DBManager {
         return instance;
     }
 
-    private void openConnection() throws SQLException {
+    private void openConnection(String url, String user, String pass) throws SQLException {
         log.info("Opening connection to database...");
-        this.connection = DriverManager.getConnection(
-                "jdbc:mariadb://localhost:3306/statusMonitorDB",
-                "admin", "adminpass"); // TODO: environment variables
+        this.connection = DriverManager.getConnection(url, user, pass);
         log.info("Database connection opened!");
     }
 
@@ -61,7 +64,7 @@ public class DBManager {
                 nomi.add(n);
             }
         } catch (SQLException e) {
-            System.err.println(e); // TODO handle
+            log.error(e.getMessage());
         }
         return nomi.toArray(new nomeCheckBean[0]);
     }
@@ -75,7 +78,7 @@ public class DBManager {
                 linee.add(resultSet.getInt("nome"));
             }
         } catch (SQLException e) {
-            System.err.println(e); // TODO handle
+            log.error(e.getMessage());
         }
 
         return linee.toArray(new Integer[0]);
@@ -92,7 +95,7 @@ public class DBManager {
                 orari.add(new OrariBean(resultSet.getTime("orario").toLocalTime(), resultSet.getInt("capolinea")));
             }
         } catch (SQLException e) {
-            System.err.println(e); // TODO handle
+            log.error(e.getMessage());
         }
 
         return orari.toArray(new OrariBean[0]);
