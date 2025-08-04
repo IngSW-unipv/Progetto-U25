@@ -1,0 +1,8 @@
+1   general error
+2   error with command line arguments
+
+11  general fatal database error
+12  database connection error
+
+21  general web server error
+22  web server starting error
