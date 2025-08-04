@@ -17,11 +17,11 @@ public class Checkpoint implements Cloneable {
         this.orario = orario;
     }
 
-    public String getNomeCheckpoint(){
+    public String getNomeCheckpoint() {
         return NomiCheckpoint.getNome(this.id);
     }
 
-    public Checkpoint clone(){
+    public Checkpoint clone() {
         return new Checkpoint(this.id, this.progressivo, this.orario);
     }
 

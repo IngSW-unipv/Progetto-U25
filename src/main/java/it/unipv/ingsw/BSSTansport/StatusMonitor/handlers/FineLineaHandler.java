@@ -7,7 +7,7 @@ import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.SessionManager;
 import java.util.HashMap;
 
 public class FineLineaHandler implements Handler {
-    public static void handeRequest(TabellaDiMarcia tabellaMarcia){
+    public static void handeRequest(TabellaDiMarcia tabellaMarcia) {
         String vId = Flotta.getInstance().trovaVeicoloId(tabellaMarcia);
         String token = SessionManager.getInstance().trovaToken(vId);
         try {

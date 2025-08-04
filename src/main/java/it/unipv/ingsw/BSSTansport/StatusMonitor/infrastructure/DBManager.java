@@ -42,7 +42,7 @@ public class DBManager {
         log.info("Opening connection to database...");
         this.connection = DriverManager.getConnection(
                 "jdbc:mariadb://localhost:3306/statusMonitorDB",
-                "admin", "adminpass"); //TODO: environment variables
+                "admin", "adminpass"); // TODO: environment variables
         log.info("Database connection opened!");
     }
 
@@ -61,7 +61,7 @@ public class DBManager {
                 nomi.add(n);
             }
         } catch (SQLException e) {
-            System.err.println(e);      //TODO handle
+            System.err.println(e); // TODO handle
         }
         return nomi.toArray(new nomeCheckBean[0]);
     }
@@ -75,7 +75,7 @@ public class DBManager {
                 linee.add(resultSet.getInt("nome"));
             }
         } catch (SQLException e) {
-            System.err.println(e);      //TODO handle
+            System.err.println(e); // TODO handle
         }
 
         return linee.toArray(new Integer[0]);
@@ -84,26 +84,28 @@ public class DBManager {
     public OrariBean[] getOrari(int linea) {
         ArrayList<OrariBean> orari = new ArrayList<OrariBean>();
 
-        try (PreparedStatement statement = this.connection.prepareStatement("SELECT orario, capolinea FROM orari_inizio WHERE linea = ?")) {
+        try (PreparedStatement statement = this.connection
+                .prepareStatement("SELECT orario, capolinea FROM orari_inizio WHERE linea = ?")) {
             statement.setInt(1, linea);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 orari.add(new OrariBean(resultSet.getTime("orario").toLocalTime(), resultSet.getInt("capolinea")));
             }
         } catch (SQLException e) {
-            System.err.println(e);      //TODO handle
+            System.err.println(e); // TODO handle
         }
 
         return orari.toArray(new OrariBean[0]);
     }
 
     public LoginResult checkAuth(String username, String passHash) throws SQLException {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT nome, cognome FROM conducente WHERE cf=? and pass_hash = ?");
+        PreparedStatement statement = this.connection
+                .prepareStatement("SELECT nome, cognome FROM conducente WHERE cf=? and pass_hash = ?");
         statement.setString(1, username);
         statement.setString(2, passHash);
         ResultSet resultSet = statement.executeQuery();
 
-        //check number of lines returned, if !=1, the username and password are wrong
+        // check number of lines returned, if !=1, the username and password are wrong
         resultSet.last();
         if (resultSet.getRow() != 1)
             return LoginResult.failed();
@@ -115,11 +117,12 @@ public class DBManager {
         ArrayList<CheckpointSuLineaBean> checkpoints = new ArrayList<CheckpointSuLineaBean>();
 
         PreparedStatement statement = this.connection.prepareStatement("""
-                SELECT cl.checkpoint, cl.numero, cl.delayS, c.tipo, s.lunghezza, s.durata_fermataS
-                FROM checkpoint_su_linea AS cl 
-                LEFT JOIN checkpoint AS c ON  cl.checkpoint=c.id
-                LEFT JOIN stazione AS s ON c.id=s.id
-                WHERE cl.linea=?""");
+                SELECT cl.checkpoint, cl.numero, cl.delayS, tc.nome AS tipo, s.lunghezza, s.durata_fermataS
+                    FROM checkpoint_su_linea AS cl
+                    LEFT JOIN checkpoint AS c ON  cl.checkpoint=c.id
+                    JOIN tipi_checkpoint tc ON c.tipo=tc.id
+                    LEFT JOIN stazione AS s ON c.id=s.id
+                    WHERE cl.linea=?""");
         statement.setInt(1, linea);
         ResultSet resultSet = statement.executeQuery();
 
@@ -128,7 +131,7 @@ public class DBManager {
                     resultSet.getInt("checkpoint"),
                     resultSet.getInt("numero"),
                     resultSet.getInt("delayS"),
-                    resultSet.getInt("tipo"),
+                    resultSet.getString("tipo"),
                     resultSet.getInt("lunghezza"),
                     resultSet.getInt("durata_fermataS")));
         }

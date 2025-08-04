@@ -4,7 +4,7 @@ public class LoginResult {
     private final String nome;
     private final String cognome;
     private final boolean success;
-    private String token=null;
+    private String token = null;
 
     public static LoginResult failed() {
         return new LoginResult(null, null, false);
@@ -35,8 +35,7 @@ public class LoginResult {
     public void setToken(String token) throws Exception {
         if (this.token == null) {
             this.token = token;
-        }
-        else{
+        } else {
             throw new Exception("value is already assigned");
         }
 

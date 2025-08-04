@@ -20,7 +20,7 @@ public class App {
         DBManager dbm = DBManager.getInstance();
         Javalin webServer = createWebServer();
 
-        if(arguments.get("show_GUI")){
+        if (arguments.get("show_GUI")) {
             TabellaVeicoli gui = new TabellaVeicoli(new IntermediarioFlottaTabella());
             GuiUpdateHandler.setGui(gui);
             GuiUpdateHandler.handleRequest();
@@ -38,27 +38,26 @@ public class App {
 
     static private Javalin createWebServer() {
         Javalin app = Javalin.create(config -> {
-                    config.router.ignoreTrailingSlashes = true;
-                    config.router.caseInsensitiveRoutes = true;
+            config.router.ignoreTrailingSlashes = true;
+            config.router.caseInsensitiveRoutes = true;
 
-                    config.staticFiles.add(staticFiles -> {
-                        staticFiles.hostedPath = "/";
-                        staticFiles.directory = "web";
-                        staticFiles.location = Location.EXTERNAL;
-                    });
+            config.staticFiles.add(staticFiles -> {
+                staticFiles.hostedPath = "/";
+                staticFiles.directory = "web";
+                staticFiles.location = Location.EXTERNAL;
+            });
 
-                    JavalinJackson mapper = new JavalinJackson();
-                    mapper.getMapper().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-                    config.jsonMapper(mapper);
-                }
-        );
+            JavalinJackson mapper = new JavalinJackson();
+            mapper.getMapper().disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            config.jsonMapper(mapper);
+        });
 
-        //api pubbliche
+        // api pubbliche
         app.get("/api/getLinee", GetLineeHandler::handleRequest);
         app.get("/api/getOrari", GetOrariHandler::handleRequest);
         app.post("/api/login", LoginHandler::handleRequest);
 
-        //api riservate
+        // api riservate
         app.before("/reserved/*", CheckAuthHandler::handleRequest);
         app.before("/api/reserved/*", CheckAuthHandler::handleRequest);
         app.get("/api/reserved/logout", WebLogoutHandler::handleRequest);

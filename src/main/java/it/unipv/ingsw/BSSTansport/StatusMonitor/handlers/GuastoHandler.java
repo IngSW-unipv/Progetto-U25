@@ -17,7 +17,7 @@ public class GuastoHandler {
 
         try {
             request = ctx.bodyAsClass(HashMap.class);
-            if (!Utils.checkContextFields(request, new String[]{"guasto"})) {
+            if (!Utils.checkContextFields(request, new String[] { "guasto" })) {
                 ctx.status(400);
                 return;
             }

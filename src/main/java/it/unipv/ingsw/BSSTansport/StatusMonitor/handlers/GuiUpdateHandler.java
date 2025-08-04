@@ -8,8 +8,8 @@ import it.unipv.ingsw.BSSTansport.StatusMonitor.data.Veicolo;
 public class GuiUpdateHandler implements Handler {
     private static TabellaVeicoli gui;
 
-    public static void handleRequest(){
-        if(gui!=null){
+    public static void handleRequest() {
+        if (gui != null) {
             Veicolo[] veicoli = Flotta.getInstance().getClonedVeicoliArray();
             gui.update(veicoli);
         }

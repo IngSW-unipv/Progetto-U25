@@ -17,17 +17,17 @@ public class TabellaVeicoli {
     IntermediarioFlottaTabella flotta;
 
     public TabellaVeicoli(IntermediarioFlottaTabella flotta) {
-        //frame
+        // frame
         frame = new JFrame("Stato flotta");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1700, 956);
         frame.setLayout(new BorderLayout());
 
-        //dati
+        // dati
         this.flotta = flotta;
 
-        //tabella
-        String[] colonne = {"", "Stato", "Veicolo", "Linea", "Ultima Fermata", "Prossima Fermata", "Ritardo"};
+        // tabella
+        String[] colonne = { "", "Stato", "Veicolo", "Linea", "Ultima Fermata", "Prossima Fermata", "Ritardo" };
 
         tableModel = new DefaultTableModel(colonne, 0);
         table = new JTable(tableModel);
@@ -36,7 +36,6 @@ public class TabellaVeicoli {
         // filtraggio
         sorter = new TableRowSorter<>(tableModel);
         table.setRowSorter(sorter);
-
 
         JPanel filtroPanel = new JPanel(new BorderLayout());
         filtroField = new JTextField();

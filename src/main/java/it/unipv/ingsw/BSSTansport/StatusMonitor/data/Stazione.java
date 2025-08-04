@@ -3,7 +3,7 @@ package it.unipv.ingsw.BSSTansport.StatusMonitor.data;
 import java.time.Duration;
 import java.time.LocalTime;
 
-public class Stazione extends Checkpoint{
+public class Stazione extends Checkpoint {
     private Integer lunghezza;
     private Duration durata;
 

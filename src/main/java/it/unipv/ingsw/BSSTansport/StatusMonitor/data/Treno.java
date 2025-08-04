@@ -7,14 +7,14 @@ import java.time.LocalTime;
 public class Treno extends Veicolo {
     TipiTreno tipo;
 
-    public Treno(CheckpointSuLineaBean[] checkpoints,String id, LocalTime time, int capolinea, int linea, String tipo) throws IllegalArgumentException {
+    public Treno(CheckpointSuLineaBean[] checkpoints, String id, LocalTime time, int capolinea, int linea, String tipo)
+            throws IllegalArgumentException {
         super(checkpoints, id, time, capolinea, linea);
 
         this.tipo = TipiTreno.valueOf(tipo);
     }
 
-
-    enum TipiTreno{
+    enum TipiTreno {
         LOCALE,
         REGIONALE,
         ESPRESSO

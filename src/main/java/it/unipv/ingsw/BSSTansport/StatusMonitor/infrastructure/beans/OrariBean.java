@@ -15,7 +15,6 @@ public class OrariBean {
         this.setNomeCapolinea(capolineaID);
     }
 
-
     public LocalTime getOrario() {
         return orario;
     }

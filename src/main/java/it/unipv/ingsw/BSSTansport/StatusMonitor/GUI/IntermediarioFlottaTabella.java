@@ -14,7 +14,7 @@ public class IntermediarioFlottaTabella {
 
     public synchronized void update(Veicolo[] nuoviVeicoli) {
         ArrayList<VeicoloGUI> veicoli = new ArrayList<VeicoloGUI>();
-        for (Veicolo v: nuoviVeicoli) {
+        for (Veicolo v : nuoviVeicoli) {
             veicoli.add(new VeicoloGUI(v));
         }
 

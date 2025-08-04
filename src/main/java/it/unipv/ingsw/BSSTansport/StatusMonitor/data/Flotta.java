@@ -36,13 +36,14 @@ public class Flotta {
         this.updateGui();
     }
 
-    public void aggiungiVeicolo(String vId, CheckpointSuLineaBean[] checkpoints, LocalTime time, int capolinea, int linea) {
+    public void aggiungiVeicolo(String vId, CheckpointSuLineaBean[] checkpoints, LocalTime time, int capolinea,
+            int linea) {
         this.veicoli.put(vId, new Veicolo(checkpoints, vId, time, capolinea, linea));
         this.updateGui();
     }
 
     public String trovaVeicoloId(TabellaDiMarcia tabellaMarcia) {
-        String vId=null;
+        String vId = null;
         for (HashMap.Entry<String, Veicolo> entry : this.veicoli.entrySet()) {
             if (entry.getValue().hasThisTabellaDiMarcia(tabellaMarcia)) {
                 vId = entry.getKey();
@@ -51,11 +52,11 @@ public class Flotta {
         return vId;
     }
 
-    public HashMap<String,String>[] webTabellaInfo(String vId){
+    public HashMap<String, String>[] webTabellaInfo(String vId) {
         return this.veicoli.get(vId).webTabellaInfo();
     }
 
-    public boolean nextCheckpoint(String vId){
+    public boolean nextCheckpoint(String vId) {
         boolean finished = this.veicoli.get(vId).nextCheckpoint();
         this.updateGui();
         return finished;
@@ -66,15 +67,15 @@ public class Flotta {
         this.updateGui();
     }
 
-    public Veicolo[] getClonedVeicoliArray(){
+    public Veicolo[] getClonedVeicoliArray() {
         Veicolo[] veicoli = this.veicoli.values().toArray(new Veicolo[0]);
-        for (int i = 0; i < veicoli.length ; i++) {
-            veicoli[i]=veicoli[i].clone();
+        for (int i = 0; i < veicoli.length; i++) {
+            veicoli[i] = veicoli[i].clone();
         }
         return veicoli;
     }
 
-    private void updateGui(){
+    private void updateGui() {
         GuiUpdateHandler.handleRequest();
     }
 }

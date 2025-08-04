@@ -9,12 +9,12 @@ public class PcheckPointHandler {
     public static void handleRequest(@NotNull Context ctx) {
         String token = ctx.cookie("token");
 
-        String vId= SessionManager.getInstance().getVId(token);
+        String vId = SessionManager.getInstance().getVId(token);
 
         boolean finished = Flotta.getInstance().nextCheckpoint(vId);
         if (finished) {
             ctx.status(205);
-        }else{
+        } else {
             webInfoHandler.handleRequest(ctx, vId);
         }
     }

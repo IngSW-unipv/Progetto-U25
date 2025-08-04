@@ -15,7 +15,7 @@ public class webInfoHandler implements Handler {
 
     public static void handleRequest(@NotNull Context ctx) {
         String token = ctx.cookie("token");
-        String vId= SessionManager.getInstance().getVId(token);
-        handleRequest(ctx, vId);  //calls the other method overload
+        String vId = SessionManager.getInstance().getVId(token);
+        handleRequest(ctx, vId); // calls the other method overload
     }
 }

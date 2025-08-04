@@ -19,37 +19,34 @@ public class RegistraViaggioHandler implements Handler {
     public static void handleRequest(@NotNull Context ctx) {
         String token = ctx.cookie("token");
         String vId = null;
-        HashMap<String,String> request = null;
+        HashMap<String, String> request = null;
         CheckpointSuLineaBean[] checkpoints = null;
 
-        try{
-            request=ctx.bodyAsClass(HashMap.class);
-            if(!Utils.checkContextFields(request, new String[]{"orarioPartenza","capolinea","linea"}))
-            {
+        try {
+            request = ctx.bodyAsClass(HashMap.class);
+            if (!Utils.checkContextFields(request, new String[] { "orarioPartenza", "capolinea", "linea" })) {
                 ctx.status(400);
                 return;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             ctx.status(500);
             return;
         }
 
-        vId=SessionManager.getInstance().getVId(token);
+        vId = SessionManager.getInstance().getVId(token);
 
-        try{
+        try {
             checkpoints = DBManager.getInstance().getCheckpointSuLinea(Integer.parseInt(request.get("linea")));
             Flotta.getInstance().aggiungiVeicolo(
                     vId,
                     checkpoints,
                     LocalTime.parse(request.get("orarioPartenza"), DateTimeFormatter.ISO_LOCAL_TIME),
                     Integer.parseInt(request.get("capolinea")),
-                    Integer.parseInt(request.get("linea"))
-                    );
+                    Integer.parseInt(request.get("linea")));
             ctx.status(200);
-        }catch(SQLException e){
+        } catch (SQLException e) {
             ctx.status(500);
         }
-
 
     }
 
