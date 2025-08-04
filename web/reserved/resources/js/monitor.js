@@ -23,7 +23,7 @@ class Checkpoint extends InfoboxData {
         super()
         this.nome = nome
         this.orarioPianificato = dateCreationAdapter(orarioPianificato)
-        this.orarioEffettivo = addMinutes(this.orarioPianificato, vStatus.ritardo)
+        this.orarioEffettivo = new Date(addMinutes(this.orarioPianificato, vStatus.ritardo))
     }
 
     infoBoxHtml() {
@@ -78,11 +78,8 @@ function dateCreationAdapter(timestamp) {
     // timestamp ottenuto dal backend segue formato HH:mm
     [hours, minutes] = timestamp.split(':')
 
-    date = new Date()
+    let date = new Date()
 
-    if (hours < date.getHours()) {
-        date.setDate(date.getDate() + 1); //adds one day
-    }
     date.setHours(hours)
     date.setMinutes(minutes)
 
@@ -90,6 +87,8 @@ function dateCreationAdapter(timestamp) {
 }
 
 function addMinutes(date, minutes) {
+    date = new Date(date.getTime())
+    
     date.setMinutes(date.getMinutes() + minutes);
     return date
 }
@@ -149,6 +148,8 @@ function aggiornaUI() {
 }
 
 function aggiornaRitardo() {
+    let ritardoDate = null
+
     if (checkAttuale instanceof Estremo) {
         ritardoDate = Date.now() - checkSucc.orarioPianificato.getTime()
     } else {
