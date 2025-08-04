@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8" />
-    <title>BSSTansport monitor: Schedule</title>
+    <title>BSSTansport monitor</title>
+    <link rel="stylesheet" href="/reserved/resources/css/monitor.css">
 </head>
+
 <body>
-    
+    <div id="immagine">
+        <div class="cerchio top"></div>
+        <div class="barra"></div>
+        <div class="cerchio bottom"></div>
+    </div>
+    <div id="datiCont">
+        <div id="prossCheckpBox" class="infoBox">Caricamento...</div>
+        <div id="statusBox" class="infoBox">Caricamento...</div>
+        <div id="ultCheckpBox" class="infoBox">Caricamento...</div>
+    </div>
+    <div id="bottCont">
+        <button class="warning-bg" style="flex: 1" onclick="guasto()"><span id="guastoText">Guasto</span><span
+                id="statoGuasto"></span></button>
+        <button style="flex: 2" onclick="prosCheckp()">Prossimo Checkpoint</button>
+    </div>
 </body>
+<script src="/reserved/resources/js/monitor.js"></script>
+<script>getInfo()</script>
+
 </html>

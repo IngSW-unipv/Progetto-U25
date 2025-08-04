@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BSSTansport monitor: Linea Completa</title>
+    <link rel='stylesheet' href='/resources/css/general.css'>
+</head>
+
+<body>
+    <div class="form-container" id="loginDiv">
+        <h1>Linea Completata</h1>
+        <span>
+            <p>Ritorno in homepage in </p>
+            <p id="countdown"></p>
+        </span>
+    </div>
+</body>
+
+<script>
+    cdText = document.getElementById('countdown')
+    secondsLeft = 7
+    cdText.textContent = secondsLeft
+
+    const countdown = setInterval(() => {
+        secondsLeft--
+        cdText.textContent = secondsLeft
+
+        if (secondsLeft <= 0) {
+            window.location.href = '/index.html'
+        }
+    }, 1000)
+</script>
+
+</html>

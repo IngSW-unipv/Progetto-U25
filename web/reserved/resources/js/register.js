@@ -44,7 +44,7 @@ async function popolaCapolinea() {
         }
 
         capolineaDrop.innerHTML = ''
-        capolineaDrop.appendChild(creaDefaultOption("capolinea"))
+        capolineaDrop.appendChild(creaDefaultOption('capolinea'))
 
         Object.keys(capolinea).forEach(key => {
             const option = document.createElement('option')
@@ -70,7 +70,7 @@ async function popolaOrario() {
             const option = document.createElement('option')
             timeString = orari[i].orario //String(orari[i].orario[0]) + ':' + String(orari[i].orario[1])
             option.value = timeString
-            option.textContent = timeString.slice(0,5)
+            option.textContent = timeString.slice(0, 5)
             orarioDrop.appendChild(option)
         }
     }
@@ -88,8 +88,8 @@ function creaDefaultOption(text) {
     return option
 }
 
-function resettaDropdown(dropdown){
-    dropdown.innerHTML='<option value="">Scegli sopra...</option>'
+function resettaDropdown(dropdown) {
+    dropdown.innerHTML = '<option value="">Scegli sopra...</option>'
 }
 
 async function registra() {
@@ -109,9 +109,7 @@ async function registra() {
         })
     try {
         if (!response.ok) { throw new Error() }
-        else {
-            window.location.href = "/reserved/monitor.html"
-        }
+        window.location.href = "/reserved/monitor.html"
     } catch (e) {
         if (response.status >= 500 && response.status <= 599) {
             alert('server error')
@@ -122,10 +120,10 @@ async function registra() {
     }
 }
 
-function lockBtn(){
-    registraBtn.disabled=true
+function lockBtn() {
+    registraBtn.disabled = true
 }
 
-function unlockBtn(){
-    registraBtn.disabled=false
+function unlockBtn() {
+    registraBtn.disabled = false
 }

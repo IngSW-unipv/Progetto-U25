@@ -42,8 +42,8 @@ function wrongLogin() {
 
 function controllaRedirect() {
     const params = new URLSearchParams(window.location.search)
-    const redirect = params.get("redirect")
-    if (redirect) {
+    const cRedirect = params.get("causaRedirect")
+    if (cRedirect==401) {
         alert('Sei stato riportato alla pagina di login a causa di un errore di autenticazione')
     }
 }
