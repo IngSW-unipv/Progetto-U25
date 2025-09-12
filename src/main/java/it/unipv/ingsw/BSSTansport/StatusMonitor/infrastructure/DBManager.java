@@ -53,7 +53,21 @@ public class DBManager {
         this.connection.close();
     }
 
+    private void checkConnection() {
+        try {
+            if (!this.connection.isValid(3)) {
+                log.error("DB connection dropped");
+                System.exit(12);
+            }
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+            log.error("DB connection dropped");
+            System.exit(12);
+        }
+    }
+
     public nomeCheckBean[] getCheckpointNames() {
+        this.checkConnection();
         ArrayList<nomeCheckBean> nomi = new ArrayList<>();
 
         try (PreparedStatement statement = this.connection.prepareStatement("SELECT id, nome FROM checkpoint")) {
@@ -70,6 +84,7 @@ public class DBManager {
     }
 
     public Integer[] getLinee() {
+        this.checkConnection();
         ArrayList<Integer> linee = new ArrayList<Integer>();
 
         try (PreparedStatement statement = this.connection.prepareStatement("SELECT nome FROM linea")) {
@@ -85,6 +100,7 @@ public class DBManager {
     }
 
     public OrariBean[] getOrari(int linea) {
+        this.checkConnection();
         ArrayList<OrariBean> orari = new ArrayList<OrariBean>();
 
         try (PreparedStatement statement = this.connection
@@ -102,6 +118,7 @@ public class DBManager {
     }
 
     public LoginResult checkAuth(String username, String passHash) throws SQLException {
+        this.checkConnection();
         PreparedStatement statement = this.connection
                 .prepareStatement("SELECT nome, cognome FROM conducente WHERE cf=? and pass_hash = ?");
         statement.setString(1, username);
@@ -117,6 +134,7 @@ public class DBManager {
     }
 
     public CheckpointSuLineaBean[] getCheckpointSuLinea(int linea) throws SQLException {
+        this.checkConnection();
         ArrayList<CheckpointSuLineaBean> checkpoints = new ArrayList<CheckpointSuLineaBean>();
 
         PreparedStatement statement = this.connection.prepareStatement("""
