@@ -70,7 +70,7 @@ public class TabellaDiMarcia implements Cloneable {
 
     private TabellaDiMarcia(int linea, Duration ritardo, int ultimoCheck, Checkpoint[] checkpoints) {
         this.linea = linea;
-        this.ritardo = ritardo;
+        this.ritardo = ritardo.truncatedTo(ChronoUnit.MINUTES);
         this.ultimoCheck = ultimoCheck;
         this.checkpoints = checkpoints;
     }

@@ -14,4 +14,13 @@ public class Utils {
         }
         return true;
     }
+
+    public static Integer arrayIndexOf(Object[] array, Object element) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(element)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

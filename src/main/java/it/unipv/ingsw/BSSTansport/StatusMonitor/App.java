@@ -26,7 +26,7 @@ public class App {
         Javalin webServer = createWebServer();
 
         if (arguments.get("show_GUI")) {
-            TabellaVeicoli gui = new TabellaVeicoli(new IntermediarioFlottaTabella());
+            TabellaVeicoli gui = new TabellaVeicoli();
             GuiUpdateHandler.setGui(gui);
             GuiUpdateHandler.handleRequest();
         }
