@@ -69,7 +69,7 @@ public class App {
             // api riservate
             app.before("/reserved/*", CheckAuthHandler::handleRequest);
             app.before("/api/reserved/*", CheckAuthHandler::handleRequest);
-            app.get("/api/reserved/logout", WebLogoutHandler::handleRequest);
+            app.get("/api/reserved/logout", LogoutHandler::handleRequest);
             app.post("/api/reserved/registraViaggio", RegistraViaggioHandler::handleRequest);
             app.get("/api/reserved/prossimoCheckpoint", PcheckPointHandler::handleRequest);
             app.get("/api/reserved/infoCheckpoint", webInfoHandler::handleRequest);
