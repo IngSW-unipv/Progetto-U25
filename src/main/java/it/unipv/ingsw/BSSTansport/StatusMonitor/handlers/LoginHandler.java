@@ -5,6 +5,7 @@ import io.javalin.http.Cookie;
 import io.javalin.validation.ValidationException;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.DBManager;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.SessionManager;
+import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.Utils;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.LoginResult;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,12 +18,13 @@ public class LoginHandler implements Handler {
         // unpack json and validate
         try {
             request = ctx.bodyAsClass(HashMap.class);
-            if (!(request.containsKey("username") && request.containsKey("password") && request.containsKey("vid"))) {
-                throw new Exception("wrong fields");
+            if (!Utils.checkContextFields(request, new String[]{"username", "password", "vid"})) {
+                ctx.status(400);
+                return;
             }
 
         } catch (Exception e) {
-            ctx.status(400);
+            ctx.status(500);
             return;
         }
 
