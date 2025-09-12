@@ -14,14 +14,15 @@
         <div class="cerchio bottom"></div>
     </div>
     <div id="datiCont">
-        <div id="prossCheckpBox" class="infoBox">Caricamento...</div>
+        <div id="prossCheckpBox" class="infoBox stazione">Caricamento...</div>
         <div id="statusBox" class="infoBox">Caricamento...</div>
-        <div id="ultCheckpBox" class="infoBox">Caricamento...</div>
+        <div id="ultCheckpBox" class="infoBox stazione">Caricamento...</div>
     </div>
     <div id="bottCont">
-        <button class="warning-bg" style="flex: 1" onclick="guasto()"><span id="guastoText">Guasto</span><span
+        <button class="warning-bg" style="flex: 10" onclick="guasto()"><span id="guastoText">Guasto</span><span
                 id="statoGuasto"></span></button>
-        <button style="flex: 2" onclick="prosCheckp()">Prossimo Checkpoint</button>
+        <button style="flex: 20" onclick="prosCheckp()">Prossimo Checkpoint</button>
+        <button style="flex: 1; background-color: tomato" onclick="logout()">Logout</button>
     </div>
 </body>
 <script src="/reserved/resources/js/monitor.js"></script>

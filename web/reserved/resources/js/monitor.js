@@ -190,10 +190,22 @@ async function prosCheckp() {
         })
 
     if (!response.ok) { alert('server error') }
-    if (response.status == 205) { window.location.href = "/lCompletata.html" }
+    if (response.status == 205) { window.location.href = "/lCompletata.html" } //http code 205: reset content
     data = await response.json()
     aggiornaCheck(data)
     aggiornaUI()
+}
+
+async function logout() {
+    response = await fetch(
+        '/api/reserved/logout',
+        {
+            method: 'GET',
+            credentials: 'include',
+        })
+
+    if (!response.ok) { alert('server error') }
+    if (response.status == 200) { window.location.href = "/lCompletata.html" }
 }
 
 //#endregion
