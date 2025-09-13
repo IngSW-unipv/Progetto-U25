@@ -1,6 +1,5 @@
 package it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure;
 
-import it.unipv.ingsw.BSSTansport.StatusMonitor.data.Veicolo;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.infrastructure.beans.LoginResult;
 import org.apache.commons.codec.digest.DigestUtils;
 

@@ -7,9 +7,9 @@ import java.time.LocalTime;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Checkpoint implements Cloneable {
-    private int id;
-    private int progressivo;
-    private LocalTime orario;
+    protected int id;
+    protected int progressivo;
+    protected LocalTime orario;
 
     public Checkpoint(int id, int progressivo, LocalTime orario) {
         this.id = id;

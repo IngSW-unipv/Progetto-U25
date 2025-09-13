@@ -96,7 +96,7 @@ public class TabellaDiMarcia implements Cloneable {
         return false;
     }
 
-    public int getCheckpointIndexFromProgressivo(int progressivo) {
+    private int getCheckpointIndexFromProgressivo(int progressivo) {
         for (int i = 0; i < this.checkpoints.length; i++) {
             if (checkpoints[i].getProgressivo() == progressivo)
                 return i;
@@ -104,7 +104,7 @@ public class TabellaDiMarcia implements Cloneable {
         return -1;
     }
 
-    public void fineLinea() {
+    private void fineLinea() {
         FineLineaHandler.handeRequest(this);
     }
 

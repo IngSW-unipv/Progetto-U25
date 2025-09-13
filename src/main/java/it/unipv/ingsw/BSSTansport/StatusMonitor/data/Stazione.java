@@ -14,6 +14,10 @@ public class Stazione extends Checkpoint {
         this.durata = durata;
     }
 
+    public Stazione clone() {
+        return new Stazione(super.id, super.progressivo, super.orario, this.lunghezza, this.durata);
+    }
+
     public Duration getDurata() {
         return durata;
     }
