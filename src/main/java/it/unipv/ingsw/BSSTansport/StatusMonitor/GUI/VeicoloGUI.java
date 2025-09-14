@@ -1,5 +1,6 @@
 package it.unipv.ingsw.BSSTansport.StatusMonitor.GUI;
 
+import it.unipv.ingsw.BSSTansport.StatusMonitor.data.TabellaDiMarcia;
 import it.unipv.ingsw.BSSTansport.StatusMonitor.data.Veicolo;
 
 import java.time.Duration;
@@ -14,10 +15,11 @@ public class VeicoloGUI {
     private String icona;
 
     protected VeicoloGUI(Veicolo original) {
-        Duration ritardo = original.getTabellaMarcia().getRitardo();
-        this.linea = original.getTabellaMarcia().getLinea();
-        this.ultimaFermata = original.getTabellaMarcia().getCurrentCheckpointName();
-        this.prossimaFermata = original.getTabellaMarcia().getNextCheckpointName();
+        TabellaDiMarcia tm = original.getTabellaMarcia();
+        Duration ritardo = tm.getRitardo();
+        this.linea = tm.getLinea();
+        this.ultimaFermata = tm.getCurrentCheckpointName();
+        this.prossimaFermata = tm.getNextCheckpointName();
         this.veicolo = original.getId();
 
         if (original.isGuasto()) {
@@ -31,7 +33,7 @@ public class VeicoloGUI {
             this.icona = "⏩";
         } else {
             this.stato = StatiRitardo.ORARIO;
-            this.icona = "\uD83D\uDD3D";
+            this.icona = "\uD83D\uDD3D"; //freccia giù
         }
 
         this.ritardo = ritardo.toString().substring(2).replaceAll("(\\d[HMS])(?!$)", "$1 ").toLowerCase();
@@ -39,7 +41,11 @@ public class VeicoloGUI {
     }
 
     public Object[] aRiga() {
-        return new Object[] { icona, stato, veicolo, linea, ultimaFermata, prossimaFermata, ritardo };
+        return new Object[]{icona, stato, veicolo, linea, ultimaFermata, prossimaFermata, ritardo};
+    }
+
+    public boolean isGuasto() {
+        return this.stato == StatiRitardo.GUASTO;
     }
 
     enum StatiRitardo {

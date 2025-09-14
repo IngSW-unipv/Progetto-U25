@@ -2,7 +2,7 @@ INSERT INTO linea VALUES (1), (2);
 
 INSERT INTO conducente (nome, cognome, cf, pass_hash)
 VALUES
-("Admin","Test","Admin","8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
+("Admin","Administrator","Admin","8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
 ("Bumi","Rumble","RBMB123456XYZ789","52c8e02987ccb1b0eef9c7c966aebf03c92a159aafda37fbcf03f4838dbcd48d"),
 ("Toph","Beifong","BFNG987654QWE321","ecd1378bc9dc130008f00d58db5d26f60db55934a49b949af7e6f6a8da2a2beb"),
 ("Kao","Kahn","KHNK654321ABC987","25a63e52a98f6fdaa6187da559a0a3a55d845d0322ca183ad6ad5e006c4ed646"),

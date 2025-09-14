@@ -26,7 +26,7 @@ public class App {
         Javalin webServer = createWebServer();
 
         if (arguments.get("show_GUI")) {
-            TabellaVeicoli gui = new TabellaVeicoli(new IntermediarioFlottaTabella());
+            TabellaVeicoli gui = new TabellaVeicoli();
             GuiUpdateHandler.setGui(gui);
             GuiUpdateHandler.handleRequest();
         }
@@ -69,7 +69,7 @@ public class App {
             // api riservate
             app.before("/reserved/*", CheckAuthHandler::handleRequest);
             app.before("/api/reserved/*", CheckAuthHandler::handleRequest);
-            app.get("/api/reserved/logout", WebLogoutHandler::handleRequest);
+            app.get("/api/reserved/logout", LogoutHandler::handleRequest);
             app.post("/api/reserved/registraViaggio", RegistraViaggioHandler::handleRequest);
             app.get("/api/reserved/prossimoCheckpoint", PcheckPointHandler::handleRequest);
             app.get("/api/reserved/infoCheckpoint", webInfoHandler::handleRequest);

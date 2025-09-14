@@ -12,4 +12,10 @@ public class LogoutHandler implements Handler {
 
         SessionManager.getInstance().logout(token);
     }
+
+    public static void handleRequest(@NotNull Context ctx) throws Exception {
+        String token = ctx.cookie("token");
+        LogoutHandler.handleRequest(token);
+        ctx.removeCookie("token");
+    }
 }
